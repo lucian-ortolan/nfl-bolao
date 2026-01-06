@@ -37,6 +37,12 @@ export default async function RootLayout({
                   )}
                   <span className="text-zinc-400">|</span>
                   <span className="text-zinc-300">{user.name}</span>
+                  <Link
+                    href="/trocar-senha"
+                    className="rounded-md border border-zinc-700 px-2 py-1 hover:bg-zinc-900"
+                  >
+                    Trocar Senha
+                  </Link>
                   <LogoutButton />
                 </>
               ) : (
