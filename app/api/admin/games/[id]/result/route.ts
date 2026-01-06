@@ -3,7 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/src/lib/prisma";
 import { requireAdmin } from "@/src/lib/auth";
 import { winner, distance } from "@/src/lib/scoring";
-import type { Pick } from "@prisma/client";
+import { Pick } from "@prisma/client";
 
 export const runtime = "nodejs";
 
