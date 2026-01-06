@@ -17,7 +17,7 @@ export async function PUT(
 ) {
   await requireAdmin();
 
-  const { id: gameId } = await ctx.params; // ✅ aqui
+  const { id: gameId } = await ctx.params;
   const body = Body.parse(await req.json());
 
   await prisma.game.update({
@@ -64,9 +64,11 @@ export async function PUT(
           distance(p.predictedHome, p.predictedAway, rh, ra)
         )
       );
+
       for (const p of winnerPicks) {
-        if (distance(p.predictedHome, p.predictedAway, rh, ra) === best)
+        if (distance(p.predictedHome, p.predictedAway, rh, ra) === best) {
           pointsByPickId.set(p.id, 2);
+        }
       }
     }
   }
