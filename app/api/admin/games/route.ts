@@ -48,3 +48,15 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ game });
 }
+
+export async function DELETE(
+  _req: Request,
+  ctx: { params: Promise<{ id: string }> }
+) {
+  await requireAdmin();
+  const { id } = await ctx.params;
+
+  await prisma.game.delete({ where: { id } });
+
+  return NextResponse.json({ ok: true });
+}
