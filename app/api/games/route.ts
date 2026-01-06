@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 import { prisma } from "@/src/lib/prisma";
 import { requireUser } from "@/src/lib/auth";
 
 export const runtime = "nodejs";
 
-type GameWithTeamsAndMyPick = Prisma.GameGetPayload<{
-  include: {
-    homeTeam: true;
-    awayTeam: true;
-    picks: {
-      select: { predictedHome: true; predictedAway: true; points: true };
-    };
-  };
-}>;
+type GamesResult = Awaited<
+  ReturnType<
+    typeof prisma.game.findMany<{
+      include: {
+        homeTeam: true;
+        awayTeam: true;
+        picks: {
+          select: { predictedHome: true; predictedAway: true; points: true };
+        };
+      };
+    }>
+  >
+>;
 
 export async function GET(req: Request) {
   const user = await requireUser();
@@ -26,7 +29,7 @@ export async function GET(req: Request) {
       { status: 400 }
     );
 
-  const games: GameWithTeamsAndMyPick[] = await prisma.game.findMany({
+  const games: GamesResult = await prisma.game.findMany({
     where: { roundId },
     orderBy: { startsAt: "asc" },
     include: {
