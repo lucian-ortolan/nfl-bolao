@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+enum Role {
+  ADMIN
+  PLAYER
+}
+
+enum GameStatus {
+  SCHEDULED
+  FINAL
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  phone        String?   @unique
+  passwordHash String
+  role         Role      @default(PLAYER)
+  createdAt    DateTime  @default(now())
+
+  sessions     Session[]
+  picks        Pick[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Round {
+  id        String   @id @default(cuid())
+  name      String   // Wildcard, Divisional, etc
+  sortOrder Int
+  startsAt  DateTime
+  createdAt DateTime @default(now())
+
+  games     Game[]
+}
+
+model Team {
+  id    String @id @default(cuid())
+  name  String
+  abbr  String @unique
+
+  homeGames Game[] @relation("HomeTeam")
+  awayGames Game[] @relation("AwayTeam")
+}
+
+model Game {
+  id         String     @id @default(cuid())
+  roundId    String
+  round      Round      @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  homeTeamId String
+  awayTeamId String
+  homeTeam   Team       @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam   Team       @relation("AwayTeam", fields: [awayTeamId], references: [id])
+
+  startsAt   DateTime
+  status     GameStatus @default(SCHEDULED)
+
+  homeScore  Int?
+  awayScore  Int?
+
+  picks      Pick[]
+
+  @@index([roundId])
+  @@index([startsAt])
+}
+
+model Pick {
+  id            String   @id @default(cuid())
+  userId        String
+  gameId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game          Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  predictedHome Int
+  predictedAway Int
+  points        Int      @default(0)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, gameId])
+  @@index([gameId])
+}
