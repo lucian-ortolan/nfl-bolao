@@ -1,19 +1,34 @@
-import { NextResponse } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireUser } from '@/src/lib/auth'
+import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
+import { prisma } from "@/src/lib/prisma";
+import { requireUser } from "@/src/lib/auth";
 
-export const runtime = 'nodejs'
+export const runtime = "nodejs";
+
+type GameWithTeamsAndMyPick = Prisma.GameGetPayload<{
+  include: {
+    homeTeam: true;
+    awayTeam: true;
+    picks: {
+      select: { predictedHome: true; predictedAway: true; points: true };
+    };
+  };
+}>;
 
 export async function GET(req: Request) {
-  const user = await requireUser()
+  const user = await requireUser();
 
-  const { searchParams } = new URL(req.url)
-  const roundId = searchParams.get('roundId')
-  if (!roundId) return NextResponse.json({ error: 'roundId é obrigatório' }, { status: 400 })
+  const { searchParams } = new URL(req.url);
+  const roundId = searchParams.get("roundId");
+  if (!roundId)
+    return NextResponse.json(
+      { error: "roundId é obrigatório" },
+      { status: 400 }
+    );
 
-  const games = await prisma.game.findMany({
+  const games: GameWithTeamsAndMyPick[] = await prisma.game.findMany({
     where: { roundId },
-    orderBy: { startsAt: 'asc' },
+    orderBy: { startsAt: "asc" },
     include: {
       homeTeam: true,
       awayTeam: true,
@@ -22,10 +37,10 @@ export async function GET(req: Request) {
         select: { predictedHome: true, predictedAway: true, points: true },
       },
     },
-  })
+  });
 
   return NextResponse.json({
-    games: games.map(g => ({
+    games: games.map((g) => ({
       id: g.id,
       startsAt: g.startsAt,
       status: g.status,
@@ -35,5 +50,5 @@ export async function GET(req: Request) {
       awayTeam: { abbr: g.awayTeam.abbr, name: g.awayTeam.name },
       myPick: g.picks[0] ?? null,
     })),
-  })
+  });
 }
