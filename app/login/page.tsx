@@ -47,7 +47,6 @@ export default function LoginPage() {
             className="w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="(DDD) 99999-9999"
           />
         </div>
 
