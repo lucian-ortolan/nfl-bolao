@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/src/lib/prisma";
 import { requireAdmin } from "@/src/lib/auth";
 import { winner, distance } from "@/src/lib/scoring";
+import type { Pick } from "@prisma/client";
 
 export const runtime = "nodejs";
 
@@ -29,14 +30,14 @@ export async function PUT(
     },
   });
 
-  const picks = await prisma.pick.findMany({ where: { gameId } });
+  const picks: Pick[] = await prisma.pick.findMany({ where: { gameId } });
 
   const rh = body.homeScore;
   const ra = body.awayScore;
   const realWinner = winner(rh, ra);
 
   const exactWinners = picks.filter(
-    (p) =>
+    (p: Pick) =>
       winner(p.predictedHome, p.predictedAway) === realWinner &&
       p.predictedHome === rh &&
       p.predictedAway === ra
