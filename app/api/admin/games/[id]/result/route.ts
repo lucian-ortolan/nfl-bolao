@@ -31,14 +31,14 @@ export async function PUT(
     },
   });
 
-const picks: PickRow[] = await prisma.pick.findMany({ where: { gameId } });
+  const picks: PickRow[] = await prisma.pick.findMany({ where: { gameId } });
 
-const rh = body.homeScore;
-const ra = body.awayScore;
-const realWinner = winner(rh, ra);
+  const rh = body.homeScore;
+  const ra = body.awayScore;
+  const realWinner = winner(rh, ra);
 
-const exactWinners = picks.filter(
-  (p: PickRow) =>
+  const exactWinners = picks.filter(
+    (p: PickRow) =>
       winner(p.predictedHome, p.predictedAway) === realWinner &&
       p.predictedHome === rh &&
       p.predictedAway === ra
@@ -54,7 +54,7 @@ const exactWinners = picks.filter(
     for (const p of exactWinners) pointsByPickId.set(p.id, 3);
   } else {
     const winnerPicks = picks.filter(
-      (p) => winner(p.predictedHome, p.predictedAway) === realWinner
+      (p: PickRow) => winner(p.predictedHome, p.predictedAway) === realWinner
     );
 
     for (const p of picks) pointsByPickId.set(p.id, 0);
@@ -62,7 +62,7 @@ const exactWinners = picks.filter(
 
     if (winnerPicks.length > 0) {
       const best = Math.min(
-        ...winnerPicks.map((p) =>
+        ...winnerPicks.map((p: PickRow) =>
           distance(p.predictedHome, p.predictedAway, rh, ra)
         )
       );
@@ -76,7 +76,7 @@ const exactWinners = picks.filter(
   }
 
   await prisma.$transaction(
-    picks.map((p) =>
+    picks.map((p: PickRow) =>
       prisma.pick.update({
         where: { id: p.id },
         data: { points: pointsByPickId.get(p.id)! },

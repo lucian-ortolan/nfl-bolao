@@ -11,10 +11,13 @@ export async function GET() {
     },
   });
 
-  const data = rounds.map((r) => {
+  const data = rounds.map((r: (typeof rounds)[number]) => {
     const nextGame = r.games
       .slice()
-      .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt))[0];
+      .sort(
+        (a: (typeof r.games)[number], b: (typeof r.games)[number]) =>
+          +new Date(a.startsAt) - +new Date(b.startsAt)
+      )[0];
 
     return {
       id: r.id,
