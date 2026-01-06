@@ -32,7 +32,12 @@ export async function GET(req: Request) {
       name: userMap.get(g.userId) ?? "???",
       points: g._sum.points ?? 0,
     }))
-    .sort((a, b) => b.points - a.points);
+    .sort(
+      (
+        a: { userId: string; name: string; points: number },
+        b: { userId: string; name: string; points: number }
+      ) => b.points - a.points
+    );
 
   return NextResponse.json({ ranking });
 }
