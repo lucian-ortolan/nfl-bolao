@@ -11,12 +11,16 @@ const UpdateBody = z.object({
   startsAt: z.string().datetime(),
 });
 
-export async function PUT(req: Request, ctx: { params: { id: string } }) {
+export async function PUT(
+  req: Request,
+  ctx: { params: Promise<{ id: string }> }
+) {
   await requireAdmin();
+  const { id } = await ctx.params; // ✅
   const body = UpdateBody.parse(await req.json());
 
   const round = await prisma.round.update({
-    where: { id: ctx.params.id },
+    where: { id },
     data: {
       name: body.name.trim(),
       sortOrder: body.sortOrder,
@@ -27,8 +31,13 @@ export async function PUT(req: Request, ctx: { params: { id: string } }) {
   return NextResponse.json({ round });
 }
 
-export async function DELETE(_: Request, ctx: { params: { id: string } }) {
+export async function DELETE(
+  _req: Request,
+  ctx: { params: Promise<{ id: string }> }
+) {
   await requireAdmin();
-  await prisma.round.delete({ where: { id: ctx.params.id } });
+  const { id } = await ctx.params; // ✅
+
+  await prisma.round.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }

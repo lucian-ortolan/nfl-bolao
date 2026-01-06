@@ -2,25 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/src/lib/prisma";
 import { requireAdmin } from "@/src/lib/auth";
+import { winner, distance } from "@/src/lib/scoring";
 
 export const runtime = "nodejs";
 
-export async function DELETE(
-  _req: Request,
-  ctx: { params: Promise<{ id: string }> }
-) {
-  await requireAdmin();
-  const { id } = await ctx.params;
-
-  await prisma.game.delete({ where: { id } });
-  return NextResponse.json({ ok: true });
-}
-
-const UpdateBody = z.object({
-  roundId: z.string().min(1),
-  homeTeamId: z.string().min(1),
-  awayTeamId: z.string().min(1),
-  startsAt: z.string().datetime(),
+const Body = z.object({
+  homeScore: z.number().int().min(0),
+  awayScore: z.number().int().min(0),
 });
 
 export async function PUT(
@@ -28,25 +16,70 @@ export async function PUT(
   ctx: { params: Promise<{ id: string }> }
 ) {
   await requireAdmin();
-  const { id } = await ctx.params;
-  const body = UpdateBody.parse(await req.json());
 
-  if (body.homeTeamId === body.awayTeamId) {
-    return NextResponse.json(
-      { error: "Time da casa e visitante não podem ser iguais" },
-      { status: 400 }
-    );
-  }
+  const { id: gameId } = await ctx.params;
+  const body = Body.parse(await req.json());
 
-  const game = await prisma.game.update({
-    where: { id },
+  await prisma.game.update({
+    where: { id: gameId },
     data: {
-      roundId: body.roundId,
-      homeTeamId: body.homeTeamId,
-      awayTeamId: body.awayTeamId,
-      startsAt: new Date(body.startsAt),
+      homeScore: body.homeScore,
+      awayScore: body.awayScore,
+      status: "FINAL",
     },
   });
 
-  return NextResponse.json({ game });
+  const picks = await prisma.pick.findMany({ where: { gameId } });
+
+  const rh = body.homeScore;
+  const ra = body.awayScore;
+  const realWinner = winner(rh, ra);
+
+  const exactWinners = picks.filter(
+    (p) =>
+      winner(p.predictedHome, p.predictedAway) === realWinner &&
+      p.predictedHome === rh &&
+      p.predictedAway === ra
+  );
+
+  const pointsByPickId = new Map<string, number>();
+
+  if (exactWinners.length > 0) {
+    for (const p of picks) {
+      const win = winner(p.predictedHome, p.predictedAway) === realWinner;
+      pointsByPickId.set(p.id, win ? 1 : 0);
+    }
+    for (const p of exactWinners) pointsByPickId.set(p.id, 3);
+  } else {
+    const winnerPicks = picks.filter(
+      (p) => winner(p.predictedHome, p.predictedAway) === realWinner
+    );
+
+    for (const p of picks) pointsByPickId.set(p.id, 0);
+    for (const p of winnerPicks) pointsByPickId.set(p.id, 1);
+
+    if (winnerPicks.length > 0) {
+      const best = Math.min(
+        ...winnerPicks.map((p) =>
+          distance(p.predictedHome, p.predictedAway, rh, ra)
+        )
+      );
+      for (const p of winnerPicks) {
+        if (distance(p.predictedHome, p.predictedAway, rh, ra) === best) {
+          pointsByPickId.set(p.id, 2);
+        }
+      }
+    }
+  }
+
+  await prisma.$transaction(
+    picks.map((p) =>
+      prisma.pick.update({
+        where: { id: p.id },
+        data: { points: pointsByPickId.get(p.id)! },
+      })
+    )
+  );
+
+  return NextResponse.json({ ok: true });
 }
