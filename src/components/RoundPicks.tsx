@@ -21,6 +21,7 @@ export default function RoundPicks({ roundId }: { roundId: string }) {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [savingAll, setSavingAll] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -84,11 +85,76 @@ export default function RoundPicks({ roundId }: { roundId: string }) {
     setMsg("Palpite salvo.");
   }
 
+  async function saveAll() {
+    setMsg(null);
+    setSavingAll(true);
+
+    const now = new Date();
+    const openGames = games.filter((g) => new Date(g.startsAt) > now);
+
+    if (openGames.length === 0) {
+      setSavingAll(false);
+      setMsg("Não há jogos abertos para salvar.");
+      return;
+    }
+
+    const picks = openGames
+      .filter((g) => g.myPick)
+      .map((g) => ({
+        gameId: g.id,
+        predictedHome: g.myPick!.predictedHome,
+        predictedAway: g.myPick!.predictedAway,
+      }));
+
+    if (picks.length === 0) {
+      setSavingAll(false);
+      setMsg("Preencha pelo menos um palpite antes de salvar.");
+      return;
+    }
+
+    const res = await fetch("/api/picks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ picks }),
+    });
+
+    setSavingAll(false);
+
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      setMsg(j.error ?? "Erro ao salvar palpites");
+      return;
+    }
+
+    const result = await res.json();
+    if (result.errors && result.errors.length > 0) {
+      setMsg(
+        `${result.saved} palpites salvos. Avisos: ${result.errors.join(", ")}`
+      );
+    } else {
+      setMsg(`${result.saved} palpite(s) salvo(s) com sucesso!`);
+    }
+  }
+
   if (loading) return <p className="text-zinc-400">Carregando...</p>;
+
+  const hasOpenGames = games.some((g) => new Date() < new Date(g.startsAt));
 
   return (
     <div className="space-y-3">
       {msg && <p className="text-sm text-zinc-300">{msg}</p>}
+
+      {hasOpenGames && (
+        <div className="flex justify-end">
+          <button
+            disabled={savingAll}
+            onClick={saveAll}
+            className="rounded-md bg-blue-600 px-4 py-2 font-medium hover:bg-blue-700 disabled:opacity-60"
+          >
+            {savingAll ? "Salvando..." : "Salvar Todos os Palpites"}
+          </button>
+        </div>
+      )}
 
       {games.map((g) => {
         const locked = new Date() >= new Date(g.startsAt);
