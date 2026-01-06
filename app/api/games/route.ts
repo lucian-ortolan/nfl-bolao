@@ -29,32 +29,15 @@ export async function GET(req: Request) {
   });
 
   return NextResponse.json({
-    games: games.map(
-      (
-        g
-      ): {
-        id: string;
-        startsAt: Date;
-        status: string;
-        homeScore: number | null;
-        awayScore: number | null;
-        homeTeam: { abbr: string; name: string };
-        awayTeam: { abbr: string; name: string };
-        myPick: {
-          predictedHome: number;
-          predictedAway: number;
-          points: number | null;
-        } | null;
-      } => ({
-        id: g.id,
-        startsAt: g.startsAt,
-        status: g.status,
-        homeScore: g.homeScore,
-        awayScore: g.awayScore,
-        homeTeam: { abbr: g.homeTeam.abbr, name: g.homeTeam.name },
-        awayTeam: { abbr: g.awayTeam.abbr, name: g.awayTeam.name },
-        myPick: g.picks[0] ?? null,
-      })
-    ),
+    games: games.map((g: (typeof games)[number]) => ({
+      id: g.id,
+      startsAt: g.startsAt,
+      status: g.status,
+      homeScore: g.homeScore,
+      awayScore: g.awayScore,
+      homeTeam: { abbr: g.homeTeam.abbr, name: g.homeTeam.name },
+      awayTeam: { abbr: g.awayTeam.abbr, name: g.awayTeam.name },
+      myPick: g.picks[0] ?? null,
+    })),
   });
 }
