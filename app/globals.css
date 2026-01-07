@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
+@layer base {
+  @font-face {
+    font-family: "Bebas Neue";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://fonts.gstatic.com/s/bebasneue/v14/JTUSjIg69CK48gW7PXooxW5rygbi49c.woff2")
+      format("woff2");
+  }
+
+  @font-face {
+    font-family: "Roboto Condensed";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://fonts.gstatic.com/s/robotocondensed/v27/ieVl2ZhZI2eCN5jzbjEETS9weq8-19K7DQ.woff2")
+      format("woff2");
+  }
+
+  @font-face {
+    font-family: "Roboto Condensed";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("https://fonts.gstatic.com/s/robotocondensed/v27/ieVi2ZhZI2eCN5jzbjEETS9weq8-32meGCQYag.woff2")
+      format("woff2");
+  }
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --nfl-green: #00a651;
+  --nfl-dark: #0a1929;
+  --nfl-field: #1a4d2e;
+  --field-line: #ffffff;
+  --nfl-orange: #ff6b35;
+  --nfl-gold: #ffd700;
+  --nfl-brown: #8b5a3c;
+  --background: #0a1929;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-nfl-green: var(--nfl-green);
+  --color-nfl-orange: var(--nfl-orange);
+  --color-nfl-gold: var(--nfl-gold);
+  --font-sans: "Roboto Condensed", sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #0a1929 0%, #1a2f3f 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Textura de campo de futebol americano de fundo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 50px,
+    rgba(0, 166, 81, 0.02) 50px,
+    rgba(0, 166, 81, 0.02) 100px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Estilo para títulos NFL */
+.nfl-title {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffd700 0%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Efeito de borda de campo */
+.field-border {
+  border: 3px solid var(--nfl-green);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 166, 81, 0.3),
+    inset 0 0 20px rgba(0, 166, 81, 0.1);
+}
+
+/* Botões estilo NFL */
+.nfl-button {
+  background: linear-gradient(135deg, var(--nfl-orange) 0%, #d64520 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.nfl-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+  border-color: var(--nfl-gold);
+}
+
+/* Card estilo NFL */
+.nfl-card {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 47, 63, 0.95) 0%,
+    rgba(10, 25, 41, 0.95) 100%
+  );
+  border: 2px solid rgba(0, 166, 81, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.nfl-card:hover {
+  border-color: rgba(0, 166, 81, 0.6);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 166, 81, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Destaque dourado */
+.gold-highlight {
+  color: var(--nfl-gold);
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Estilo para inputs */
+input,
+select,
+textarea {
+  background: rgba(26, 47, 63, 0.8);
+  border: 2px solid rgba(0, 166, 81, 0.3);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--nfl-green);
+  outline: none;
+  box-shadow: 0 0 15px rgba(0, 166, 81, 0.4);
+}
+
+/* Tabela estilo NFL */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th {
+  background: linear-gradient(135deg, var(--nfl-field) 0%, #0d3a21 100%);
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nfl-gold);
+  border-bottom: 3px solid var(--nfl-green);
+}
+
+tr:hover {
+  background: rgba(0, 166, 81, 0.1);
+}
+
+/* Animação de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out;
 }

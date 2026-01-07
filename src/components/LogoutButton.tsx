@@ -14,7 +14,7 @@ export default function LogoutButton() {
   return (
     <button
       onClick={logout}
-      className="rounded-md border border-zinc-700 px-2 py-1 hover:bg-zinc-900"
+      className="rounded border-2 border-red-600 px-3 py-1 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300 font-semibold uppercase tracking-wide"
     >
       Sair
     </button>
