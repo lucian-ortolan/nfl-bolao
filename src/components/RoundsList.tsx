@@ -39,7 +39,7 @@ export default function RoundsList() {
       {rounds.map((r) => (
         <div
           key={r.id}
-          className="bg-gradient-to-r from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:border-[#00a651] hover:shadow-[0_12px_48px_rgba(0,0,0,0.6),0_0_30px_rgba(0,166,81,0.2)] transition-all duration-300 hover:-translate-y-1"
+          className="bg-linear-to-b from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:border-[#00a651] hover:shadow-[0_12px_48px_rgba(0,0,0,0.6),0_0_30px_rgba(0,166,81,0.2)] transition-all duration-300 hover:-translate-y-1"
         >
           <div className="flex items-center justify-between">
             <div className="space-y-2">
@@ -71,7 +71,7 @@ export default function RoundsList() {
 
             <Link
               href={`/rodada/${r.id}`}
-              className="rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#d64520] px-6 py-3 text-white font-bold text-lg uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] border-2 border-white/20 hover:-translate-y-1"
+              className="rounded-lg bg-linear-to-r from-[#ff6b35] to-[#d64520] px-6 py-3 text-white font-bold text-lg uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] border-2 border-white/20 hover:-translate-y-1"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               🎯 Palpitar
@@ -80,7 +80,7 @@ export default function RoundsList() {
         </div>
       ))}
       {rounds.length === 0 && (
-        <div className="text-center py-12 bg-gradient-to-b from-[#1a2f3f]/50 to-[#0a1929]/50 rounded-lg border-2 border-[#00a651]/20">
+        <div className="text-center py-12 bg-linear-to-b from-[#1a2f3f]/50 to-[#0a1929]/50 rounded-lg border-2 border-[#00a651]/20">
           <p className="text-gray-400 text-lg">
             Nenhuma rodada cadastrada ainda. 🏈
           </p>

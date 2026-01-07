@@ -16,14 +16,14 @@ export default async function RootLayout({
     <html lang="pt-br">
       <body className="min-h-screen relative">
         {/* Header com tema NFL */}
-        <header className="border-b-4 border-[#00a651] bg-gradient-to-r from-[#0a1929] via-[#1a2f3f] to-[#0a1929] shadow-lg sticky top-0 z-50 backdrop-blur-sm">
+        <header className="border-b-4 border-[#00a651] bg-linear-to-r from-[#0a1929] via-[#1a2f3f] to-[#0a1929] shadow-lg sticky top-0 z-50 backdrop-blur-sm">
           <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
             <Link
               href="/"
               className="text-3xl font-bold tracking-wider uppercase"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
-              <span className="bg-gradient-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              <span className="bg-linear-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 🏈 NFL Bolão
               </span>
             </Link>
@@ -46,7 +46,7 @@ export default async function RootLayout({
                   {user.role === "ADMIN" && (
                     <Link
                       href="/admin"
-                      className="px-3 py-2 rounded bg-gradient-to-r from-[#ff6b35] to-[#d64520] text-white hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-lg"
+                      className="px-3 py-2 rounded bg-linear-to-r from-[#ff6b35] to-[#d64520] text-white hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-lg"
                     >
                       Admin
                     </Link>
@@ -71,7 +71,7 @@ export default async function RootLayout({
                   </Link>
                   <Link
                     href="/register"
-                    className="px-3 py-2 rounded bg-gradient-to-r from-[#ff6b35] to-[#d64520] text-white hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-lg"
+                    className="px-3 py-2 rounded bg-linear-to-r from-[#ff6b35] to-[#d64520] text-white hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-lg"
                   >
                     Cadastro
                   </Link>

@@ -14,7 +14,7 @@ export default async function Home() {
             className="text-7xl font-bold tracking-wider uppercase mb-4"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
-            <span className="bg-gradient-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+            <span className="bg-linear-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
               🏈 Bolão NFL
             </span>
           </h1>
@@ -32,7 +32,7 @@ export default async function Home() {
 
         <div className="flex gap-6 justify-center mt-8">
           <Link
-            className="rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#d64520] px-8 py-4 text-white font-bold text-xl uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] hover:-translate-y-1 border-2 border-white/20"
+            className="rounded-lg bg-linear-to-r from-[#ff6b35] to-[#d64520] px-8 py-4 text-white font-bold text-xl uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] hover:-translate-y-1 border-2 border-white/20"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             href="/login"
           >
@@ -48,7 +48,7 @@ export default async function Home() {
         </div>
 
         <div className="mt-12 grid grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <div className="bg-gradient-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
+          <div className="bg-linear-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
             <div className="text-4xl mb-2">🎯</div>
             <h3
               className="font-bold text-lg text-[#ffd700] uppercase tracking-wide mb-2"
@@ -61,7 +61,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="bg-gradient-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
+          <div className="bg-linear-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
             <div className="text-4xl mb-2">🏆</div>
             <h3
               className="font-bold text-lg text-[#ffd700] uppercase tracking-wide mb-2"
@@ -72,7 +72,7 @@ export default async function Home() {
             <p className="text-sm text-gray-300">Acerte e suba no ranking</p>
           </div>
 
-          <div className="bg-gradient-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
+          <div className="bg-linear-to-b from-[#1a2f3f]/80 to-[#0a1929]/80 p-6 rounded-lg border-2 border-[#00a651]/30 hover:border-[#00a651] transition-all duration-300">
             <div className="text-4xl mb-2">👥</div>
             <h3
               className="font-bold text-lg text-[#ffd700] uppercase tracking-wide mb-2"

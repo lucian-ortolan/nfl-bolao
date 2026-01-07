@@ -28,7 +28,7 @@ export default function RankingView() {
     );
 
   return (
-    <div className="bg-gradient-to-b from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+    <div className="bg-linear-to-b from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
       {rows.length === 0 ? (
         <p className="text-gray-400 text-center py-4">
           Sem pontos ainda. Faça seus palpites! 🎯

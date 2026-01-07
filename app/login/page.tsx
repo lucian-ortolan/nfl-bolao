@@ -41,8 +41,8 @@ export default function LoginPage() {
           <h1
             className="text-5xl font-bold tracking-wider uppercase mb-2"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            <span className="bg-gradient-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent">
+          >            
+            <span className="bg-linear-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent">
               🔐 Login
             </span>
           </h1>
@@ -51,7 +51,7 @@ export default function LoginPage() {
 
         <form
           onSubmit={onSubmit}
-          className="space-y-4 bg-gradient-to-b from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+          className="space-y-4 bg-linear-to-b from-[#1a2f3f]/95 to-[#0a1929]/95 rounded-lg border-2 border-[#00a651]/30 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
         >
           <div className="space-y-2">
             <label
@@ -62,7 +62,6 @@ export default function LoginPage() {
             </label>
             <input
               className="w-full rounded-md border-2 border-[#00a651]/30 bg-[#1a2f3f]/80 px-4 py-3 text-white focus:border-[#00a651] focus:outline-none focus:shadow-[0_0_15px_rgba(0,166,81,0.4)] transition-all duration-300"
-              placeholder="(11) 99999-9999"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -78,7 +77,6 @@ export default function LoginPage() {
             <input
               type="password"
               className="w-full rounded-md border-2 border-[#00a651]/30 bg-[#1a2f3f]/80 px-4 py-3 text-white focus:border-[#00a651] focus:outline-none focus:shadow-[0_0_15px_rgba(0,166,81,0.4)] transition-all duration-300"
-              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -92,7 +90,7 @@ export default function LoginPage() {
 
           <button
             disabled={loading}
-            className="w-full rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#d64520] px-6 py-3 text-white font-bold text-lg uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 disabled:hover:translate-y-0 border-2 border-white/20"
+            className="w-full rounded-lg bg-linear-to-r from-[#ff6b35] to-[#d64520] px-6 py-3 text-white font-bold text-lg uppercase tracking-wide hover:from-[#ff8555] hover:to-[#ff6b35] transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.4)] hover:shadow-[0_6px_20px_rgba(255,107,53,0.6)] disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 disabled:hover:translate-y-0 border-2 border-white/20"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             {loading ? "🏈 Entrando..." : "⚡ Entrar"}

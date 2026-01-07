@@ -8,7 +8,7 @@ export default function RankingPage() {
           className="text-6xl font-bold tracking-wider uppercase mb-2"
           style={{ fontFamily: "'Bebas Neue', sans-serif" }}
         >
-          <span className="bg-gradient-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+          <span className="bg-linear-to-r from-[#ffd700] via-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
             🏆 Ranking
           </span>
         </h1>
