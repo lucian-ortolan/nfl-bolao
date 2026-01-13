@@ -38,6 +38,13 @@ export default async function RootLayout({
                     Rodadas
                   </Link>
                   <Link
+                    href="/apuracao/palpites"
+                    className="px-3 py-2 rounded hover:bg-[#00a651] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,166,81,0.5)]"
+                    title="Ver palpites apurados"
+                  >
+                    Palpites
+                  </Link>
+                  <Link
                     href="/ranking"
                     className="px-3 py-2 rounded hover:bg-[#00a651] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,166,81,0.5)]"
                   >
