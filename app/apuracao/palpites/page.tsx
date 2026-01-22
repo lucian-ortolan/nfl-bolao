@@ -47,8 +47,8 @@ export default async function Page({ searchParams }: Props) {
                   {g.awayTeam.abbr} @ {g.homeTeam.abbr}
                 </div>
                 <div className="text-sm text-zinc-400">
-                  {new Date(g.startsAt).toLocaleString()} • Final: {g.awayScore}
-                  -{g.homeScore}
+                  {new Date(g.startsAt).toLocaleString("pt-BR")} • Final:{" "}
+                  {g.awayScore}-{g.homeScore}
                 </div>
               </div>
             </div>
